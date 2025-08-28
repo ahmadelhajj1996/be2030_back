@@ -6,20 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class Part extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $fillable = ['post_id', 'title', 'description' ,'image'];
 
-    protected $fillable = [
-        'title',
-        'description'
-    ];
-
-    public function posts()
+    public function post()
     {
-        return $this->hasMany(Post::class);
+        return $this->belongsTo(Post::class);
     }
-
 
 }

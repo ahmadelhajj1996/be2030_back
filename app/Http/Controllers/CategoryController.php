@@ -36,13 +36,14 @@ class CategoryController extends Controller
     {
         $data = $this->validateRequest($request, [
             'title' => 'required|string|max:255',
+            'description' => 'string',
         ]);
 
 
         $category = Category::create($data);
-
         return $this->successResponse($category, 'messages', 'created');
     }
+
     public function update(Request $request, $id)
     {
         $category = Category::find($id);
