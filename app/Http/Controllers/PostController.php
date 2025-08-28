@@ -28,7 +28,7 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
-        $categories = Post::get();
+        $categories = Post::with('category')->get();
         return $this->successResponse($categories, 'messages', 'postsـretrievedـsuccessfully');
     }
 

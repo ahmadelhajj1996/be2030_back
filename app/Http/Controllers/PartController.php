@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class PartController extends Controller
 {
-    
+
 
     use ApiResponseTrait;
     private function validateRequest(Request $request, array $rules)
@@ -29,7 +29,7 @@ class PartController extends Controller
 
     public function index(Request $request)
     {
-        $categories = Part::get();
+        $categories = Part::with('post')->get();
         return $this->successResponse($categories, 'messages', 'partsـretrievedـsuccessfully');
     }
 
