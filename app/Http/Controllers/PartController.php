@@ -49,8 +49,14 @@ class PartController extends Controller
             $data['image'] = 'storage/' . $request->file('image')->store('parts', 'public');
         }
 
-        $part = Part::create($data);
+        $imagePath = $this->handleImageUpload($request->file('image'));
 
+        $part = Part::create([
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'post_id' => $data['post_id'],
+            'image' => $imagePath,
+        ]);
         return $this->successResponse($part, 'messages', 'created');
     }
 
@@ -92,5 +98,32 @@ class PartController extends Controller
         $part->delete();
 
         return $this->successResponse([], 'messages', 'deleted');
+    }
+
+    protected function handleImageUpload($imageFile): string
+    {
+        if (!$imageFile || !$imageFile->isValid()) {
+            throw new \Exception('Invalid image file');
+        }
+
+        // Generate unique filename with original extension
+        $extension = $imageFile->getClientOriginalExtension();
+        $filename = 'parts/' . uniqid() . '_' . time() . '.' . $extension;
+
+        // Store image in storage (public disk)
+        $path = $imageFile->storeAs('public', $filename);
+
+        // Return path without 'public/' prefix for database storage
+        return $filename;
+    }
+
+    /**
+     * Clean up image file from storage
+     */
+    protected function cleanupImage($imagePath): void
+    {
+        if ($imagePath && Storage::exists('public/' . $imagePath)) {
+            Storage::delete('public/' . $imagePath);
+        }
     }
 }
