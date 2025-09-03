@@ -74,7 +74,7 @@ class PostController extends Controller
             // Create post
             $post = Post::create([
                 'title' => $validatedData['title'],
-
+                'description' => $validatedData['description'],
                 'category_id' => $validatedData['category_id'],
                 'image' => $imagePath,
             ]);
