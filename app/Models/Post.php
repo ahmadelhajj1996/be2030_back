@@ -9,7 +9,7 @@ class Post extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['category_id', 'title', 'image'];
+    protected $fillable = ['category_id', 'title', 'description', 'image'];
 
     public function category()
     {
@@ -20,5 +20,5 @@ class Post extends Model
     {
         return $this->hasMany(Part::class);
     }
-    
+
 }

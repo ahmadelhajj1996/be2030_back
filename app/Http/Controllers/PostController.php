@@ -21,7 +21,8 @@ class PostController extends Controller
         $rules = [
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'description' => 'nullable',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ];
 
         if ($isUpdate) {
@@ -54,7 +55,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = Post::with('category')->get();
+        $posts = Post::with('parts')->get();
         return $this->successResponse($posts, 'messages', 'posts_retrieved_successfully');
     }
 
@@ -73,6 +74,7 @@ class PostController extends Controller
             // Create post
             $post = Post::create([
                 'title' => $validatedData['title'],
+
                 'category_id' => $validatedData['category_id'],
                 'image' => $imagePath,
             ]);
