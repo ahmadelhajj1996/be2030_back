@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PartController;
+use App\Http\Controllers\LikeController;
 
 
 
@@ -25,3 +26,7 @@ Route::get('parts', [PartController::class, 'index']);
 Route::post('parts', [PartController::class, 'store']);
 Route::put('parts/{category}', [PartController::class, 'update']);
 Route::delete('parts/{category}', [PartController::class, 'destroy']);
+
+
+Route::get('likes', [LikeController::class, 'index']);
+Route::post('likes', [LikeController::class, 'store']);
